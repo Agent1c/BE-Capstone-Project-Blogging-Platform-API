@@ -1,7 +1,10 @@
 from rest_framework import viewsets, permissions
 from .models import Post, Category
-from .serializers import PostSerializer, CategorySerializer
+from .serializers import PostSerializer, CategorySerializer, UserSerializer
+from rest_framework import generics
+from django.contrib.auth.models import User
 
+# Post Viewset Model
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
@@ -22,7 +25,16 @@ class PostViewSet(viewsets.ModelViewSet):
         if author_id:
             queryset = queryset.filter(author_id=author_id)
         return queryset
+    
+# Category Viewset Model
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
 
 class CategoryViewSet(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+
+class UserRegistrationView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer

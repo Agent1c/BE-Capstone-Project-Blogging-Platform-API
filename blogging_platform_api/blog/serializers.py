@@ -1,16 +1,19 @@
 from rest_framework import serializers
 from .models import Post, Category, Tag
-
+from django.contrib.auth.models import User
+# Tag Serialzer Model
 class TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
         fields = ['id', 'name']
 
+# Category Serialzer Model
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ['id', 'name']
 
+# Post Serialzer Model
 class PostSerializer(serializers.ModelSerializer):
     tags = TagSerializer(many=True, required=False)
 
@@ -46,3 +49,13 @@ class PostSerializer(serializers.ModelSerializer):
             tag, created = Tag.objects.get_or_create(**tag_data)
             instance.tags.add(tag)
         return instance
+    
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password']
+        extra_kwargs = {'password': {'write_only': True}}
+
+    def create(self, validated_data):
+        user = User.objects.create_user(**validated_data)
+        return user
