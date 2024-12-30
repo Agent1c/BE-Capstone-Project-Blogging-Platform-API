@@ -1,1 +1,1 @@
-# BE-Capstone-Project-Blogging-Platform-API
+# backend_blue_print
