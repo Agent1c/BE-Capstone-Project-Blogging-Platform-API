@@ -14,7 +14,6 @@ class Tag(models.Model):
     def __str__(self):
         return self.name
     
-# Post Model
 class Post(models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField()
